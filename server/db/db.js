@@ -3,9 +3,10 @@
 // It sends commands to the database and receives results back.
 const { Pool } = require('pg');
 
+const usesDocker = (process.env.BACKEND_USES_DOCKER != 1) ? ("localhost") : ("host.docker.internal"); // checks for env variable
 
 const pool = new Pool({ // establishes new connection pool to the postgreSQL database
-    host: "localhost", 
+    host: usesDocker,
     user: "postgres", 
     port: 5432,
     password: "256325", // replace with your password that you set during postgreSQL installation

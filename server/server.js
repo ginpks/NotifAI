@@ -10,6 +10,7 @@ const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const { createUser } = require('./models/userModel'); // Import createUser from userModel.js
+require('dotenv').config({ path: '../' });
 
 const app = express();
 app.use(cors());
@@ -36,8 +37,10 @@ const mockPostRequest = async () => {
 };
 mockPostRequest(); //Call the mockPostRequest function
 
+const debugMode = (process.env.DEBUG_MODE != 1) ? (0) : (1);    // checks for env variable
+
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port}, debug mode is ${debugMode}`);
 });
 
 

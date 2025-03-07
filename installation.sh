@@ -34,6 +34,10 @@ npm install express
 echo STARTING INSTALLATION PG
 npm install pg
 
+#dotenv environment variables
+echo STARTING INSTALLATION DOTENV
+npm install dotenv
+
 echo REMOVING DEPRECATED PACKAGES
 rm -r node_modules/inflight
 rm -r node_modules/glob

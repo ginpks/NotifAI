@@ -5,7 +5,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pg": "^8.13.3",
+    "dotenv": "^16.4.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

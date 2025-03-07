@@ -2,5 +2,9 @@
 
 echo STARTING WEB APPLICATION
 
+DEBUG_MODE=0
+DEBUG_MODE="$1"
+export DEBUG_MODE
+
 npm --prefix ./client run build
 npm --prefix ./client run start
