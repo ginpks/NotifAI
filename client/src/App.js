@@ -6,7 +6,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [data, setData] = useState(null);
   
-  // Sample data for notifications - in a real app, this would come from an API
+  // Sample data for notifications - link to API later
   const notifications = [
     {
       id: 1,
@@ -26,7 +26,7 @@ function App() {
     }
   ];
 
-  // Sample reminders - in a real app, this would come from an API
+  // Sample reminders - link to API later
   const reminders = [
     {
       id: 1,
