@@ -22,6 +22,13 @@ npm i path
 # Lint
 # npm i --save-dev eslint eslint-config-airbnb-base eslint-plugin-jest eslint-config-prettier path
 
+#dot env for login page processes
+echo "Installing dotenv..."
+npm install dotenv
+echo "installing bcrypt for password safety"
+npm install bcrypt
+npm install axios
+
 # React
 echo STARTING INSTALLATION REACT
 npm i react react-dom

@@ -17,10 +17,13 @@ const User = sequelize.define(
         // allowNull defaults to true
         //email has to be unique different from others
     },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }
 }, 
 {   // Other model options go here
     tableName: 'users'
 });
 
 module.exports = User
-

@@ -18,7 +18,12 @@
     "express": "^4.21.2",
     "path": "^0.12.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "axios": "^1.6.5",
+    "dotenv": "^16.0.0",
+    "bcrypt": "^5.1.0"
+
+
   },
   "name": "notifai",
   "version": "1.0.0",

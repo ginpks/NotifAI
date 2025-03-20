@@ -6,59 +6,59 @@
 */
 
 import React, {useState, useEffect} from "react";
+import axios from "axios";
 
-    function App() {
-        const [users, setUsers] = useState([]);
-        const [data, setData] = useState([]);    
 
-        const fetchHelloWorld = async () => {
-            const response = await fetch('http://localhost:3000/hello-world-demo');
-            const json = await response.json();
-            setData(json);
-        }
+function App() {
+  const [email, setEmail] = useState(""); // Changed from username to email
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
     
-        useEffect(() => {
-            fetchHelloWorld();
-          }, []);
+    console.log("Login button clicked! Sending request..."); // Debugging
 
-        useEffect(() => {
-          const fetchUsers = async () => {
-            try {
-              const response = await fetch('http://localhost:3000/users'); // Replace with your API URL
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              const data = await response.json();
-              setUsers(data);
-            } catch (error) {
-              console.error('Error fetching users:', error);
-            }
-          };
-
-          fetchUsers();
-        }, []); 
-
-        return (
-            <div>
-                <h1> 
-                  Whats up data baes 
-                </h1>
-                {data ? (
-                 <h1>{data.text}</h1>
-                    ) : (
-                <p>No data fetched.</p>
-                )}
-
-                <h1>Users in database:</h1>
-                <ul>
-                    {users.map((user, i) => (
-                        <li key={i}>
-                        {user.username} - {user.email}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        );
+    try {
+        const response = await axios.post("http://localhost:3000/users/login", {
+            email, // ✅ Ensure this matches the backend expectation
+            password
+        });
+        console.log("Login Success Response:", response.data); // ✅ Debugging API response
+        setMessage(response.data.message);
+    } catch (error) {
+        console.error("Login error:", error.response ? error.response.data : error.message);
+        setMessage(error.response?.data?.message || "Login failed");
     }
+};
+  return (
+    <div style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: 10 }}>
+          <label>Email</label><br />
+          <input
+            type="email"
+            value={email} // Updated state variable
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: 10 }}>
+          <label>Password</label><br />
+          <input
+            type="password"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit">Log In</button>
+      </form>
 
-    export default App;
+      {message && <p style={{ marginTop: 10 }}>{message}</p>}
+    </div>
+  );
+}
+
+export default App;

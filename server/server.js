@@ -10,7 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const { createUser: createUserController } = require('./controllers/userController'); // importing for mock post request
 const sequelize = require('./db/db');
 const User = require('./models/userModel');
-
+const bcrypt = require('bcrypt');
 
 const app = express();
 app.use(cors());
@@ -28,12 +28,14 @@ app.use('/users', userRoutes);
 
 const createHardcodedUser = async () => {
     try {
-        const existingUser = await User.findOne({ where: { username: 'john_doe', email: 'hello@gmail.com' } });
+
+        const existingUser = await User.findOne({ where: { username: 'john_doe', email: 'hello@gmail.com'} });
         if (!existingUser){
             const mockRequest = {
                 body: {
                     username: 'john_doe',
                     email: 'hello@gmail.com',
+                    password: '1234567',
                 },
             };
                 await createUserController(mockRequest);
@@ -45,6 +47,14 @@ const createHardcodedUser = async () => {
         console.error('Error hardcoding user:', error);
     }
 };
+const viewUsers = async () => {
+    try {
+        const users = await User.findAll();
+        console.log("📌 Current Users in Database:", JSON.stringify(users, null, 2));
+    } catch (error) {
+        console.error("Error fetching users:", error);
+    }
+};
 
 
 const startServer = async () => {
@@ -54,6 +64,10 @@ const startServer = async () => {
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
     });
+    await viewUsers();
 };
 
+
+
 startServer();
+
