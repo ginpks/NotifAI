@@ -42,16 +42,16 @@ const User = sequelize.define(
   }
 );
 
-// Import Notification and NotificationRecipient AFTER User is defined (prevents circular dependency)
-const Notification = require('./notificationModel');
-const NotificationRecipient = require('./notificationRecipientModel');
+// // Import Notification and NotificationRecipient AFTER User is defined (prevents circular dependency)
+// const Notification = require('./notificationModel');
+// const NotificationRecipient = require('./notificationRecipientModel');
 
 
-User.belongsToMany(Notification, {
-  through: NotificationRecipient,
-  foreignKey: 'recipientid',
-  otherKey: 'notificationid',
-});
+// User.belongsToMany(Notification, {
+//   through: NotificationRecipient,
+//   foreignKey: 'recipientid',
+//   otherKey: 'notificationid',
+// });
 
 module.exports = User;
 

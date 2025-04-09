@@ -45,20 +45,20 @@ const Notification = sequelize.define(
   }
 );
 
-// Import the child models AFTER the Notification model is defined (prevents circular depedency)
-const NewsNotification = require('./newsModel');
-const ClaimNotification = require('./claimModel');
-const PolicyNotification = require('./policyModel');
+// // Import the child models AFTER the Notification model is defined (prevents circular depedency)
+// const NewsNotification = require('./newsModel');
+// const ClaimNotification = require('./claimModel');
+// const PolicyNotification = require('./policyModel');
 
-// Define relationships here
-Notification.hasOne(NewsNotification, { foreignKey: 'notificationid' });
-Notification.hasOne(ClaimNotification, { foreignKey: 'notificationid' });
-Notification.hasOne(PolicyNotification, { foreignKey: 'notificationid' });
+// // Define relationships here
+// Notification.hasOne(NewsNotification, { foreignKey: 'notificationid' });
+// Notification.hasOne(ClaimNotification, { foreignKey: 'notificationid' });
+// Notification.hasOne(PolicyNotification, { foreignKey: 'notificationid' });
 
-// Define the belongsTo relationships AFTER the child models are imported (prevents circular dependecy)
-NewsNotification.belongsTo(Notification, { foreignKey: 'notificationid' });
-ClaimNotification.belongsTo(Notification, { foreignKey: 'notificationid' });
-PolicyNotification.belongsTo(Notification, { foreignKey: 'notificationid' });
+// // Define the belongsTo relationships AFTER the child models are imported (prevents circular dependecy)
+// NewsNotification.belongsTo(Notification, { foreignKey: 'notificationid' });
+// ClaimNotification.belongsTo(Notification, { foreignKey: 'notificationid' });
+// PolicyNotification.belongsTo(Notification, { foreignKey: 'notificationid' });
 
 module.exports = Notification;
 
