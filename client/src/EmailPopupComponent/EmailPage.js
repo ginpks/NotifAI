@@ -26,11 +26,13 @@ function EmailPage() {
         });
         setUserData(response.data.user);
 
-        const notification = await axios.get("http://localhost:3000/notifications/" + id, {
-          withCredentials: true,
-        });
+        const notification = await axios.get(
+          "http://localhost:3000/notifications/" + id,
+          {
+            withCredentials: true,
+          }
+        );
         setNotificationWrapper(notification.data);
-
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
@@ -113,6 +115,21 @@ function EmailPage() {
               }}
               onDelete={() => {
                 console.log("Delete button clicked");
+                axios
+                  .delete(
+                    "http://localhost:3000/notifications/" + notification.id,
+                    {
+                      withCredentials: true,
+                    }
+                  )
+                  .then(() => {
+                    console.log("Notification deleted");
+                    navigate("/main");
+                  })
+                  .catch((error) => {
+                    console.error("Error deleting notification:", error);
+                  });
+                window.location.href = "/main";
               }}
             />
           </div>
