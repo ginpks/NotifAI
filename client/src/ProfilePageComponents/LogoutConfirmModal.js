@@ -3,7 +3,7 @@ import useModalAnimation from '../hooks/useModalAnimation';
 import './LogoutConfirmModal.css';
 
 const LogoutConfirmModal = ({handleModalClose, onConfirm}) => {
-    let {animationClassNames, handleAnimatedClose} = useModalAnimation(handleModalClose);
+    let {animationClassNames, handleAnimatedClose} = useModalAnimation(handleModalClose, 300, "logout-modal");
     const handleModalClick = (e) => {
         e.stopPropagation();
     };

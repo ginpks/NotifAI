@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useModalAnimation = (onClose, duration=300) => {
+const useModalAnimation = (onClose, duration=300, baseClass="modal") => {
     const [isFadingOut, setIsFadingOut] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -24,12 +24,15 @@ const useModalAnimation = (onClose, duration=300) => {
           };
         
         window.addEventListener('keydown', handleKeyDown);
+          return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
         
     }, []);
 
     const animationClassNames = {
-        overlayClass: `modal-overlay ${isVisible ? 'show': ''} ${isFadingOut? 'hidden' : ''}`,
-        containerClass: `modal-container ${isVisible ? 'show': ''} ${isFadingOut? 'hidden' : ''}`
+        overlayClass: `${baseClass}-overlay ${isVisible ? 'show': ''} ${isFadingOut? 'hidden' : ''}`,
+        containerClass: `${baseClass}-container ${isVisible ? 'show': ''} ${isFadingOut? 'hidden' : ''}`
     }
     return {animationClassNames, handleAnimatedClose};
 };

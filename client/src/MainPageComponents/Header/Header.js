@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './Header.css';
 import LogoutButton from '../LogoutButton/LogoutButton';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import ProfileModal from '../../ProfilePageComponents/ProfileModal';'../../ProfilePageComponents/ProfileModal.js'
 
 
-const Header = ({ userData, onGenAIClick }) => {
+
+const Header = ({ userData, onGenAIClick, onProfileClick }) => {
   const navigate = useNavigate(); // Initialize useNavigate
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isIconFlashing, setIsIconFlashing] = useState(false); 
 
   useEffect(() => {
@@ -48,10 +47,7 @@ const Header = ({ userData, onGenAIClick }) => {
         >
           <path d="M3 12C7.97056 12 12 7.97056 12 3C12 7.97056 16.0294 12 21 12C16.0294 12 12 16.0294 12 21C12 16.0294 7.97056 12 3 12Z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
         </svg>
-        <div className="header-profile-image-container" onClick={() => {
-            console.log("Toggling dropdown");
-            setIsProfileModalOpen(true);
-        }}>
+        <div className="header-profile-image-container" onClick={onProfileClick}>
           {/* Placeholder for profile image */}
           <div className="header-profile-image-placeholder">
             {/*Avatar Icon*/}
@@ -61,9 +57,7 @@ const Header = ({ userData, onGenAIClick }) => {
             </svg>
           </div>
         </div>
-        {isProfileModalOpen && (
-            <ProfileModal handleModalClose={() => setIsProfileModalOpen(false)} />
-        )}
+
       </div>
     </header>
   );

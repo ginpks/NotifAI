@@ -11,6 +11,8 @@ import MainPage from "./MainPageComponents/MainPage";
 import Login from "./LoginPageComponents/Login/Login";
 import SignUp from "./SignUpComponents/SignUp";
 import Profile from "./ProfilePageComponents/Profile";
+import {StatusMessageProvider} from "./StatusMessageProvider";
+import StatusMessageManager from "./StatusMessageManager";
 
 const deploymentMode = process.env.DEPLOYMENT_MODE || 0;  // 1 for deployment, 0 for development
 const backendPort = process.env.BACKEND_PORT || 3000;
@@ -43,9 +45,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <StatusMessageProvider>
+      <StatusMessageManager/>
       <RouterProvider router={router} />
-    </>
+    </StatusMessageProvider>
   );
 }
 

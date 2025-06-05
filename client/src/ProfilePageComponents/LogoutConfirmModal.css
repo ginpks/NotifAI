@@ -1,4 +1,4 @@
-.modal-overlay{
+.logout-modal-overlay{
     position: fixed;
     display: flex;
     align-items: center;
@@ -14,7 +14,7 @@
     transition: opacity 0.3s ease;
 }
 
-.modal-container {
+.logout-modal-container {
     opacity: 0;
     transform: scale(0.99);
     width: 70%;
@@ -29,21 +29,21 @@
 }
 
 
-.modal-overlay.show {
+.logout-modal-overlay.show {
     opacity: 1;
 }
 
-.modal-container.show {
+.logout-modal-container.show {
     opacity: 1;
     transform: scale(1);
 }
 
-.modal-container.hidden {
+.logout-modal-container.hidden {
     opacity: 0;
     transform: scale(0.99);
 }
 
-.modal-overlay.hidden {
+.logout-modal-overlay.hidden {
     opacity: 0;
 }
 

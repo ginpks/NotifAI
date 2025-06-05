@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { deploymentMode, backendPort, backendHost, backendBaseURL } from '../../App';
+import { useStatusMessage } from "../../StatusMessageProvider";
 
 function Login() {
+  const {notify} = useStatusMessage();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const stored = localStorage.getItem("statusMessage");
+    if (stored) {
+      const {message, type} = JSON.parse(stored)
+      notify(message, type)
+      localStorage.removeItem("statusMessage");
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,11 +31,13 @@ function Login() {
         email: username, // Using username input for email
         password,
       }, { withCredentials: true }); // send cookies with request
+      localStorage.setItem("statusMessage", JSON.stringify({message: "Successfully Logged In!", type: "success"}));
       console.log("Login Success Response:", response.data);
       setMessage(response.data.message);
 
       window.location.href="/main"; // Navigate to the /main route
     } catch (error) {
+      notify("Failed to Log In", "error")
       console.error(
         "Login error:",
         error.response ? error.response.data : error.message

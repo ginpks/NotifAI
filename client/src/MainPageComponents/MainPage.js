@@ -12,6 +12,8 @@ import axios from "axios";
 import EmailPopup from "../EmailPopupComponent/EmailPopup/EmailPopup";
 import { useState, useEffect, useRef } from "react";
 import NewMessage from './ComposeNewMessage/NewMessage';
+import { useStatusMessage } from "../StatusMessageProvider";
+import ProfileModal from '../ProfilePageComponents/ProfileModal';
 
 import {
   deploymentMode,
@@ -22,6 +24,8 @@ import {
 
 // Main component to handle routing
 function MainPage() {
+  const { notify } = useStatusMessage();
+
   const filter = new Filter();
   filter.addSubscriber((x) => {
     console.log("notifications retrieved after updating filter is");
@@ -37,7 +41,18 @@ function MainPage() {
   const [selectedNotificationWrapper, setSelectedNotificationWrapper] =
     useState(null);
   const [genAIChatHistory, setGenAIChatHistory] = useState([]);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
+  useEffect(() => {
+    const status = localStorage.getItem("statusMessage");
+    if (status){
+      const {message, type} = JSON.parse(status);
+      notify(message, type);
+      localStorage.removeItem(
+        "statusMessage"
+      );
+    }
+  }, [])
   const toggleGenAI = () => {
     setIsGenAIVisible((prevIsVisible) => {
       const nextIsVisible = !prevIsVisible;
@@ -56,6 +71,7 @@ function MainPage() {
       setComposePopups((prev) => [...prev, { id: newPopupId, subject: '', minimized: false }]);
     }
     else {
+      notify("Maximum of 3 popups reached!", "info");
       console.log("Maximum of 3 popups reached.");
     }
   };
@@ -285,7 +301,7 @@ function MainPage() {
       {/* Main content area */}
       <div style={{ flexGrow: 1, padding: "20px", overflow: "auto" }}>
         {/* Header component */}
-        <Header userData={userData} onGenAIClick={toggleGenAI} />
+        <Header userData={userData} onGenAIClick={toggleGenAI} onProfileClick={() => setIsProfileModalOpen(true)}/>
 
         <div
           style={{
@@ -403,7 +419,7 @@ function MainPage() {
 
         {composePopups.map((popup, index) => {
           return(
-          <div key={popup.id} className="popup-overlay" style={{ zIndex: 1000 + index }}>
+          <div key={popup.id} className="popup-overlay" style={{ zIndex: 100 + index }}>
             <div
               className="popup-content"
               style={{
@@ -411,7 +427,7 @@ function MainPage() {
                 position: 'fixed',
                 bottom: '0',
                 left: `${72.5 - index * 27}%`,
-                zIndex: 1000 + index,
+                zIndex: 100 + index,
               }}
             >
               <NewMessage
@@ -424,6 +440,9 @@ function MainPage() {
           </div>
         );})}
 
+        {isProfileModalOpen && (
+            <ProfileModal handleModalClose={() => setIsProfileModalOpen(false)} />
+        )}
       </div>
       <CSSTransition
         nodeRef={genAiRef} // 5a. Pass the ref
